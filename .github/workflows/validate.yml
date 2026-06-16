@@ -1,0 +1,33 @@
+name: CI
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  validate:
+    name: Validate site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Required files present
+        run: |
+          set -euo pipefail
+          test -f index.html
+          test -f style.css
+          test -f CNAME
+      - name: Custom domain pinned
+        run: grep -qx "speedforge.dev" CNAME
+      - name: Landing content sanity
+        run: |
+          set -euo pipefail
+          grep -q "<title>" index.html
+          grep -q 'href="./style.css"' index.html
+          grep -q "github.com/apps/speedforge/installations/new" index.html
+          grep -q "runs-on: speedforge" index.html
+      - name: No billing/subscription model in public copy
+        run: |
+          set -euo pipefail
+          if grep -RniE "subscription|flat[- ]cap|per[- ]seat|tokenomics|quota|\\\$[0-9]" index.html; then
+            echo "Billing/pricing model must not appear in public copy (#574)"; exit 1
+          fi
