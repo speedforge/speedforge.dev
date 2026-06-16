@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speedforge — faster, cheaper CI for GitHub Actions</title>
+  <meta name="description" content="Speedforge runs your GitHub Actions on dedicated, autoscaling runners — a drop-in swap that cuts your CI bill while keeping builds fast." />
+  <meta property="og:title" content="Speedforge — faster, cheaper CI for GitHub Actions" />
+  <meta property="og:description" content="Dedicated, autoscaling CI runners for GitHub Actions. Change one line, keep your pipelines, pay less." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://speedforge.dev" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/">Speedforge</a>
+      <nav class="nav-links">
+        <a href="#how">How it works</a>
+        <a href="#why">Why Speedforge</a>
+        <a class="btn btn-ghost" href="https://github.com/apps/speedforge/installations/new">Install the app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Self-hosted CI runners, fully managed</p>
+        <h1>CI that costs less.<br />Without slowing down.</h1>
+        <p class="lede">
+          Speedforge runs your existing GitHub Actions workflows on dedicated,
+          autoscaling runners. Change one line — <code>runs-on</code> — and keep
+          every pipeline you already have, faster and for less.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+          <a class="btn btn-ghost" href="#how">See how it works</a>
+        </div>
+        <p class="subnote">Works with your existing <code>.github/workflows</code>. No pipeline rewrites.</p>
+      </div>
+    </section>
+
+    <section class="strip">
+      <div class="wrap strip-inner">
+        <span>Drop-in for GitHub Actions</span>
+        <span>Autoscaling — scales to zero</span>
+        <span>Ephemeral, isolated runners</span>
+        <span>Bring your own org</span>
+      </div>
+    </section>
+
+    <section id="how" class="section">
+      <div class="wrap">
+        <h2>Three steps to faster CI</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="num">1</div>
+            <h3>Install the app</h3>
+            <p>Add the Speedforge GitHub App to your organization. It only needs the repositories you choose.</p>
+          </div>
+          <div class="step">
+            <div class="num">2</div>
+            <h3>Point <code>runs-on</code> at Speedforge</h3>
+            <p>Swap <code>runs-on: ubuntu-latest</code> for <code>runs-on: speedforge</code> in the workflows you want to accelerate.</p>
+          </div>
+          <div class="step">
+            <div class="num">3</div>
+            <h3>Ship</h3>
+            <p>Your jobs run on dedicated Speedforge runners — the same logs, the same Actions UI, the same results.</p>
+          </div>
+        </div>
+        <pre class="code"><span class="c"># .github/workflows/ci.yml</span>
+jobs:
+  build:
+    <span class="hl">runs-on: speedforge</span>      <span class="c"># was: ubuntu-latest</span>
+    steps:
+      - uses: actions/checkout@v4
+      - run: make test</pre>
+      </div>
+    </section>
+
+    <section id="why" class="section section-alt">
+      <div class="wrap">
+        <h2>Why teams move to Speedforge</h2>
+        <div class="cards">
+          <div class="card">
+            <h3>Lower CI spend</h3>
+            <p>Dedicated runners on efficient, autoscaling infrastructure — meaningfully cheaper than stock GitHub-hosted minutes.</p>
+          </div>
+          <div class="card">
+            <h3>Just as fast</h3>
+            <p>Right-sized compute and warm capacity keep build and queue times on par with — or better than — what you have today.</p>
+          </div>
+          <div class="card">
+            <h3>Truly drop-in</h3>
+            <p>Standard GitHub Actions runner protocol. Keep your workflows, caches, and matrix builds. Change one line.</p>
+          </div>
+          <div class="card">
+            <h3>Scales to zero</h3>
+            <p>Runners spin up on demand and scale back to nothing when idle. No idle fleet to pay for or babysit.</p>
+          </div>
+          <div class="card">
+            <h3>Isolated &amp; ephemeral</h3>
+            <p>Each job gets a fresh, isolated runner that's torn down afterward — clean state, every run.</p>
+          </div>
+          <div class="card">
+            <h3>Your org, your control</h3>
+            <p>Scoped to the repositories you pick. Install in minutes, remove just as fast.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <h2>Cut your CI bill this week.</h2>
+        <p>Install the Speedforge App, point a workflow at <code>speedforge</code>, and watch your next run.</p>
+        <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="brand">Speedforge</span>
+      <span class="muted">Faster, cheaper CI for GitHub Actions.</span>
+      <a href="https://github.com/apps/speedforge/installations/new">Get started</a>
+    </div>
+  </footer>
+</body>
+</html>
