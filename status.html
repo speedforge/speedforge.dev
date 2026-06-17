@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Speedforge Status</title>
+  <meta name="description" content="Current operational status of Speedforge CI runners, telemetry, and provisioning." />
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .status-grid { display: grid; gap: .75rem; margin: 1.5rem 0; }
+    .status-row { display: flex; justify-content: space-between; align-items: center;
+      padding: .9rem 1.1rem; border: 1px solid var(--border, #2a2a35); border-radius: 10px; }
+    .badge { font-size: .85rem; font-weight: 600; padding: .25rem .7rem; border-radius: 999px; }
+    .ok { background: #0f3d2e; color: #4ade80; }
+    .degraded { background: #3d340f; color: #fbbf24; }
+    .down { background: #3d0f0f; color: #f87171; }
+    .incident { border-left: 3px solid #fbbf24; padding: .25rem 0 .25rem 1rem; margin: 1rem 0; }
+    .incident.resolved { border-left-color: #4ade80; }
+    .muted { color: var(--muted, #9aa0aa); font-size: .9rem; }
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/">Speedforge</a>
+      <nav class="nav-links">
+        <a href="/#how">How it works</a>
+        <a href="/status.html">Status</a>
+        <a class="btn btn-ghost" href="https://github.com/apps/speedforge/installations/new">Install the app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">System status</p>
+        <h1>Speedforge Status</h1>
+        <p class="lede">Current operational status of the Speedforge platform. CI jobs continue to run during upstream provisioning issues.</p>
+
+        <div class="status-grid">
+          <div class="status-row"><span>CI Runners (job execution)</span><span class="badge ok">Operational</span></div>
+          <div class="status-row"><span>Telemetry &amp; Dashboard</span><span class="badge ok">Operational</span></div>
+          <div class="status-row"><span>Node provisioning (upstream Spot control plane)</span><span class="badge degraded">Degraded</span></div>
+        </div>
+        <p class="muted">Last updated: 2026-06-17. Status is reviewed during incidents; live metrics are internal.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <h2>Incident history</h2>
+
+        <div class="incident">
+          <strong>2026-06-16 — Upstream provisioning control plane degraded</strong>
+          <p>An upstream Spot provider management-plane fault (a node-pool admission webhook rejecting updates) is preventing automated node-pool scaling changes. <strong>Impact:</strong> running CI is unaffected and jobs continue to execute; only automated capacity changes are delayed. <strong>Mitigation:</strong> capacity is being maintained manually while the provider restores the control plane; a support ticket is open. <strong>Status:</strong> monitoring — awaiting upstream fix.</p>
+        </div>
+
+        <div class="incident resolved">
+          <strong>2026-06-13 — Runner capacity floor (resolved)</strong>
+          <p>A scheduled credential refresh failed and the warm-node floor was thin, risking reduced runner capacity. <strong>Resolution:</strong> credential refresh fixed and the warm-node floor raised. No sustained job impact.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <p class="muted">Speedforge — dedicated, autoscaling CI runners for GitHub Actions. <a href="/">Home</a></p>
+    </div>
+  </footer>
+</body>
+</html>
