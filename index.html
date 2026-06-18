@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Speedforge — faster, cheaper CI for GitHub Actions</title>
-  <meta name="description" content="Speedforge runs your GitHub Actions on dedicated, autoscaling runners — a drop-in swap that cuts your CI bill while keeping builds fast." />
-  <meta property="og:title" content="Speedforge — faster, cheaper CI for GitHub Actions" />
-  <meta property="og:description" content="Dedicated, autoscaling CI runners for GitHub Actions. Change one line, keep your pipelines, pay less." />
+  <title>Speedforge — reliable, drop-in CI runners for GitHub Actions</title>
+  <meta name="description" content="Speedforge runs your GitHub Actions on dedicated, autoscaling, isolated runners. Install the app and it opens the runs-on migration PRs for you — drop-in, faster, and cheaper." />
+  <meta property="og:title" content="Speedforge — reliable, drop-in CI runners for GitHub Actions" />
+  <meta property="og:description" content="Dedicated, autoscaling, isolated CI runners for GitHub Actions. Install the app, let it open your migration PRs, keep every pipeline." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://speedforge.dev" />
   <link rel="stylesheet" href="./style.css" />
@@ -29,11 +29,12 @@
     <section class="hero">
       <div class="wrap">
         <p class="eyebrow">Self-hosted CI runners, fully managed</p>
-        <h1>CI that costs less.<br />Without slowing down.</h1>
+        <h1>Reliable CI runners.<br />Drop-in, and cheaper.</h1>
         <p class="lede">
           Speedforge runs your existing GitHub Actions workflows on dedicated,
-          autoscaling runners. Change one line — <code>runs-on</code> — and keep
-          every pipeline you already have, faster and for less.
+          autoscaling runners — each job isolated and ephemeral. Install the app
+          and it opens the <code>runs-on</code> migration PRs for you. Keep every
+          pipeline you already have, faster and for less.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
@@ -63,8 +64,8 @@
           </div>
           <div class="step">
             <div class="num">2</div>
-            <h3>Point <code>runs-on</code> at Speedforge</h3>
-            <p>Swap <code>runs-on: ubuntu-latest</code> for <code>runs-on: speedforge</code> in the workflows you want to accelerate.</p>
+            <h3>Speedforge opens the PRs</h3>
+            <p>Speedforge scans your installed repos and opens pull requests that switch <code>runs-on</code> to <code>speedforge</code>. Review and merge when you're ready — or change the line yourself.</p>
           </div>
           <div class="step">
             <div class="num">3</div>
@@ -72,6 +73,9 @@
             <p>Your jobs run on dedicated Speedforge runners — the same logs, the same Actions UI, the same results.</p>
           </div>
         </div>
+        <p style="text-align:center;color:var(--muted);margin:0 0 28px">
+          See the full walkthrough in the <a href="/getting-started.html" style="color:var(--accent)">getting-started guide</a>.
+        </p>
         <pre class="code"><span class="c"># .github/workflows/ci.yml</span>
 jobs:
   build:
@@ -116,9 +120,12 @@ jobs:
 
     <section class="cta">
       <div class="wrap cta-inner">
-        <h2>Cut your CI bill this week.</h2>
-        <p>Install the Speedforge App, point a workflow at <code>speedforge</code>, and watch your next run.</p>
-        <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+        <h2>Move your first workflow this week.</h2>
+        <p>Install the Speedforge App, let it open your migration PRs, and watch your next run.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+          <a class="btn btn-ghost" href="/getting-started.html">Read the getting-started guide</a>
+        </div>
       </div>
     </section>
   </main>
