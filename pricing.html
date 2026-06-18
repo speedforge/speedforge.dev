@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pricing — Speedforge</title>
+  <meta name="description" content="Speedforge is usage-based: pay only for the runner-minutes you use, billed per minute and meaningfully cheaper than GitHub-hosted runners. Start free — 30 days, no credit card." />
+  <meta property="og:title" content="Speedforge pricing — pay per runner-minute, cheaper than GitHub-hosted" />
+  <meta property="og:description" content="Usage-based CI runners. Pay only for the minutes you run, billed per minute, below GitHub-hosted rates. Free trial, no credit card." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://speedforge.dev/pricing.html" />
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .doc{max-width:860px}
+    .doc h2{text-align:left; margin:48px 0 16px}
+    .price-cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:18px; margin:28px 0}
+    .price-card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:26px 24px}
+    .price-card.featured{border-color:var(--accent)}
+    .price-card h3{margin:0 0 6px; color:var(--fg)}
+    .price-card .rate{font-size:1.9rem; font-weight:800; color:var(--fg); margin:8px 0}
+    .price-card .rate small{font-size:.95rem; font-weight:500; color:var(--muted)}
+    .price-card .sub{color:var(--muted); margin:0 0 14px}
+    .price-card ul{margin:14px 0 0; padding-left:1.1rem}
+    .price-card li{color:var(--muted); margin:.35rem 0}
+    .compare{width:100%; border-collapse:collapse; margin:20px 0}
+    .compare th,.compare td{text-align:left; padding:12px 14px; border-bottom:1px solid var(--border)}
+    .compare th{color:var(--fg)}
+    .compare td{color:var(--muted)}
+    .compare .you{color:var(--fg); font-weight:600}
+    .note{border-left:3px solid var(--accent); background:var(--bg-alt); padding:14px 18px; border-radius:8px; margin:24px 0}
+    .note p{margin:0; color:var(--fg)}
+    .faq summary{cursor:pointer; color:var(--fg); font-weight:600; padding:14px 0; border-bottom:1px solid var(--border)}
+    .faq p{margin:12px 0 4px; color:var(--muted)}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/">Speedforge</a>
+      <nav class="nav-links">
+        <a href="/#how">How it works</a>
+        <a href="/pricing.html">Pricing</a>
+        <a href="/getting-started.html">Getting started</a>
+        <a href="/status.html">Status</a>
+        <a class="btn btn-ghost" href="https://github.com/apps/speedforge/installations/new">Install the app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Pricing</p>
+        <h1>Pay for the minutes you run.<br />Nothing else.</h1>
+        <p class="lede">
+          Speedforge is usage-based. You're billed per runner-minute — the same
+          way you already think about CI — at a rate that comes in under
+          GitHub-hosted runners. No machine to reserve, no idle fleet to pay for.
+          Runners scale to zero when you're not building.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Start free</a>
+          <a class="btn btn-ghost" href="#plans">See the rates</a>
+        </div>
+        <p class="subnote">Free trial: 30 days, ~100 CI minutes, no credit card.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap doc">
+        <h2 id="plans">Simple, per-minute pricing</h2>
+        <p class="lead">One meter: runner-minutes. Pick the runner size your jobs need; pay only for the minutes they actually run.</p>
+
+        <div class="price-cards">
+          <div class="price-card featured">
+            <h3>Standard runner</h3>
+            <div class="rate">RATE_STANDARD <small>/ runner-minute</small></div>
+            <p class="sub">2 vCPU · drop-in for <code>ubuntu-latest</code></p>
+            <ul>
+              <li>Dedicated, isolated, ephemeral</li>
+              <li>Autoscaling — scales to zero</li>
+              <li>Below GitHub-hosted per-minute rates</li>
+            </ul>
+          </div>
+          <div class="price-card">
+            <h3>Large runner</h3>
+            <div class="rate">RATE_LARGE <small>/ runner-minute</small></div>
+            <p class="sub">More vCPU for heavy builds &amp; big matrices</p>
+            <ul>
+              <li>Same drop-in <code>runs-on</code> model</li>
+              <li>Right-sized for parallel fan-out</li>
+              <li>Still competitive with hosted large runners</li>
+            </ul>
+          </div>
+          <div class="price-card">
+            <h3>Free trial</h3>
+            <div class="rate">Free <small>to start</small></div>
+            <p class="sub">30 days · ~100 CI minutes · no card</p>
+            <ul>
+              <li>Move one workflow, see real numbers</li>
+              <li>No commitment, cancel anytime</li>
+              <li>Convert to usage-based when you're ready</li>
+            </ul>
+          </div>
+        </div>
+
+        <h2>How it compares</h2>
+        <p>Public repositories run free on GitHub; the bill shows up on private and internal repos. That's where Speedforge saves you money on every minute.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Runner</th><th>GitHub-hosted (Linux 2-core)</th><th class="you">Speedforge standard</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Per runner-minute</td><td>GitHub's published 2-core rate</td><td class="you">Lower — RATE_STANDARD</td></tr>
+            <tr><td>Idle cost</td><td>n/a</td><td class="you">Zero — scales to zero</td></tr>
+            <tr><td>Migration</td><td>—</td><td class="you">One line: <code>runs-on: speedforge</code></td></tr>
+            <tr><td>Isolation</td><td>Shared hosted pool</td><td class="you">Dedicated, isolated namespace per org</td></tr>
+          </tbody>
+        </table>
+
+        <div class="note">
+          <p>Billed monthly through Stripe against your metered usage. You only pay for runner-minutes beyond your free trial — and you can watch your usage the whole time.</p>
+        </div>
+
+        <h2>Pricing FAQ</h2>
+        <details class="faq">
+          <summary>How am I billed?</summary>
+          <p>Per runner-minute, metered as your jobs run, invoiced monthly through Stripe. No reserved capacity, no minimums beyond what you use.</p>
+        </details>
+        <details class="faq">
+          <summary>What does the free trial include?</summary>
+          <p>New organizations get 30 days and roughly 100 CI minutes, with no credit card required. Point one workflow at <code>speedforge</code> and decide from your own numbers.</p>
+        </details>
+        <details class="faq">
+          <summary>What happens when the trial ends?</summary>
+          <p>You convert to usage-based pricing — add a payment method and keep running. Nothing changes in your workflows; only the meter starts counting paid minutes.</p>
+        </details>
+        <details class="faq">
+          <summary>Are public repositories free?</summary>
+          <p>Public-repo CI is free on GitHub-hosted runners, so Speedforge is aimed at private and internal repos where minutes are billed — that's where we're cheaper.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <h2>Start free, pay only for what you run.</h2>
+        <p>Install the Speedforge App and move your first workflow this week.</p>
+        <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Start free</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="brand">Speedforge</span>
+      <span class="muted">Usage-based CI runners for GitHub Actions — cheaper per minute.</span>
+      <a href="/pricing.html">Pricing</a>
+      <a href="/getting-started.html">Getting started</a>
+    </div>
+  </footer>
+</body>
+</html>

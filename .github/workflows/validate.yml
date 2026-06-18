@@ -35,10 +35,22 @@ jobs:
           # The onboarding doc must describe the auto-migration flow.
           grep -q "github.com/apps/speedforge/installations/new" getting-started.html
           grep -q "runs-on: speedforge" getting-started.html
-      - name: No billing/subscription model in public copy
+      - name: Pricing page present + linked (usage-based)
         run: |
           set -euo pipefail
-          # Scan every public HTML page, not just the landing page (#574).
-          if grep -RniE "subscription|flat[- ]cap|per[- ]seat|tokenomics|quota|\\\$[0-9]" -- *.html; then
-            echo "Billing/pricing model must not appear in public copy (#574)"; exit 1
+          test -f pricing.html
+          # Pricing is customer-facing and must be reachable from the landing nav.
+          grep -q 'href="/pricing.html"' index.html
+          # The model we sell publicly is usage-based / per runner-minute.
+          grep -qi "runner-minute" pricing.html
+      - name: No INTERNAL cost model leaks into public copy
+        run: |
+          set -euo pipefail
+          # Speedforge is PAID and publishes customer-facing per-minute pricing
+          # (usage-based). What must NEVER appear publicly is our INTERNAL cost
+          # model — the shared/flat-capped subscription that backs the fleet and
+          # how it's billed to us (#574, feedback-no-publicize-shared-subscription).
+          # So we ban the internal-model vocabulary, NOT customer prices.
+          if grep -RniE "shared[- ]subscription|flat[- ]cap|tokenomics|shared[- ](quota|cap)|per[- ]seat|seat[- ]based|cost[- ]basis|node[- ]hour" -- *.html; then
+            echo "Internal/shared-subscription cost model must not appear in public copy (#574)"; exit 1
           fi
