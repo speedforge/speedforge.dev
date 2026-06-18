@@ -16,6 +16,7 @@ jobs:
           test -f index.html
           test -f style.css
           test -f CNAME
+          test -f getting-started.html
       - name: Custom domain pinned
         run: grep -qx "speedforge.dev" CNAME
       - name: Landing content sanity
@@ -25,9 +26,19 @@ jobs:
           grep -q 'href="./style.css"' index.html
           grep -q "github.com/apps/speedforge/installations/new" index.html
           grep -q "runs-on: speedforge" index.html
+      - name: Getting-started linked + onboarding flow present
+        run: |
+          set -euo pipefail
+          # Landing and status pages must link to the onboarding doc.
+          grep -q 'href="/getting-started.html"' index.html
+          grep -q 'href="/getting-started.html"' status.html
+          # The onboarding doc must describe the auto-migration flow.
+          grep -q "github.com/apps/speedforge/installations/new" getting-started.html
+          grep -q "runs-on: speedforge" getting-started.html
       - name: No billing/subscription model in public copy
         run: |
           set -euo pipefail
-          if grep -RniE "subscription|flat[- ]cap|per[- ]seat|tokenomics|quota|\\\$[0-9]" index.html; then
+          # Scan every public HTML page, not just the landing page (#574).
+          if grep -RniE "subscription|flat[- ]cap|per[- ]seat|tokenomics|quota|\\\$[0-9]" -- *.html; then
             echo "Billing/pricing model must not appear in public copy (#574)"; exit 1
           fi

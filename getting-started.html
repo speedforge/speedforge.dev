@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Getting started — Speedforge</title>
+  <meta name="description" content="Onboard to Speedforge in minutes: install the GitHub App, let Speedforge open the runs-on migration PRs for you, review, and merge. No pipeline rewrites." />
+  <meta property="og:title" content="Getting started with Speedforge" />
+  <meta property="og:description" content="Install the GitHub App and Speedforge auto-opens the runs-on migration PRs for your repos. Review, merge, ship." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://speedforge.dev/getting-started.html" />
+  <link rel="stylesheet" href="./style.css" />
+  <style>
+    .doc{max-width:760px}
+    .doc h2{text-align:left; margin:48px 0 16px}
+    .doc h3{margin:28px 0 8px; font-size:1.12rem}
+    .doc p,.doc li{color:var(--muted)}
+    .doc ol,.doc ul{padding-left:1.25rem}
+    .doc li{margin:.4rem 0}
+    .doc .lead{color:var(--fg); font-size:1.1rem}
+    .flow{display:grid; gap:14px; margin:24px 0}
+    .flow-step{display:flex; gap:16px; align-items:flex-start; background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:20px 22px}
+    .flow-step .num{flex:none; width:30px; height:30px; border-radius:8px; background:var(--accent); color:#1a0d06; font-weight:700; display:flex; align-items:center; justify-content:center}
+    .flow-step h3{margin:0 0 6px; color:var(--fg)}
+    .flow-step p{margin:0}
+    .note{border-left:3px solid var(--accent); background:var(--bg-alt); padding:14px 18px; border-radius:8px; margin:20px 0}
+    .note p{margin:0; color:var(--fg)}
+    .faq{margin:16px 0}
+    .faq summary{cursor:pointer; color:var(--fg); font-weight:600; padding:14px 0; border-bottom:1px solid var(--border)}
+    .faq p{margin:12px 0 4px}
+  </style>
+</head>
+<body>
+  <header class="nav">
+    <div class="wrap nav-inner">
+      <a class="brand" href="/">Speedforge</a>
+      <nav class="nav-links">
+        <a href="/#how">How it works</a>
+        <a href="/getting-started.html">Getting started</a>
+        <a href="/status.html">Status</a>
+        <a class="btn btn-ghost" href="https://github.com/apps/speedforge/installations/new">Install the app</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="wrap">
+        <p class="eyebrow">Getting started</p>
+        <h1>Onboard in minutes.</h1>
+        <p class="lede">
+          Speedforge does the migration for you. Install the GitHub App and it
+          opens the <code>runs-on</code> pull requests across your repositories —
+          you just review and merge. No pipeline rewrites, no internal
+          identifiers to wrangle.
+        </p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+          <a class="btn btn-ghost" href="#how-onboarding">How onboarding works</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap doc">
+        <h2 id="how-onboarding">The onboarding flow</h2>
+        <p class="lead">From install to running on Speedforge is four steps, and Speedforge automates the work in the middle.</p>
+
+        <div class="flow">
+          <div class="flow-step">
+            <div class="num">1</div>
+            <div>
+              <h3>Install the GitHub App</h3>
+              <p>Add the Speedforge App to your organization and choose which repositories it can see. Speedforge derives everything it needs — your org and installation — from the install event itself. You never enter an installation id, scale-set name, or any internal identifier.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="num">2</div>
+            <div>
+              <h3>Speedforge opens the migration PRs</h3>
+              <p>Speedforge scans the workflows in your installed repositories and opens pull requests that switch GitHub-hosted labels to <code>runs-on: speedforge</code>. The migration touches only the runner label — your steps, caches, matrix builds, and secrets stay exactly as they are.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="num">3</div>
+            <div>
+              <h3>Review and merge when you're ready</h3>
+              <p>The PRs land in your repos like any other change. Read the diff, run them on a branch first if you like, and merge on your schedule. You stay in control of every workflow that moves.</p>
+            </div>
+          </div>
+          <div class="flow-step">
+            <div class="num">4</div>
+            <div>
+              <h3>Ship</h3>
+              <p>Your next run executes on a dedicated, isolated Speedforge runner — same logs, same Actions UI, same results. That's it.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="note">
+          <p>Prefer to do it by hand? You can. Just change <code>runs-on: ubuntu-latest</code> to <code>runs-on: speedforge</code> in any workflow yourself — the automated PRs are a convenience, not a requirement.</p>
+        </div>
+
+        <h2>What a migration PR changes</h2>
+        <p>Exactly one line per job. Here is a typical diff:</p>
+        <pre class="code"><span class="c"># .github/workflows/ci.yml</span>
+jobs:
+  build:
+<span class="c">-   runs-on: ubuntu-latest</span>
+<span class="hl">+   runs-on: speedforge</span>
+    steps:
+      - uses: actions/checkout@v4
+      - run: make test</pre>
+        <p>Everything else — your steps, your <code>actions/cache</code>, your build matrix — is untouched. Workflows you don't want on Speedforge stay where they are.</p>
+
+        <h2>How your runners are provisioned</h2>
+        <p>When you install the App, Speedforge reconciles a dedicated environment for your org through GitOps — no manual cluster operations:</p>
+        <ul>
+          <li><strong>Dedicated, isolated namespace.</strong> Your runners get their own namespace with network policy that denies cross-tenant traffic and blocks access to the cluster API and instance metadata.</li>
+          <li><strong>Ephemeral, non-privileged runners.</strong> Each job gets a fresh runner that is torn down afterward — clean state on every run.</li>
+          <li><strong>Autoscaling to zero.</strong> Runners spin up on demand and scale back to nothing when idle, so there is no standing fleet to babysit.</li>
+        </ul>
+
+        <h2>Try it free</h2>
+        <p>New organizations start on a free trial — 30 days and roughly 100 CI minutes, no credit card required. Point a single workflow at <code>speedforge</code>, watch the run, and decide from real numbers.</p>
+
+        <h2>FAQ</h2>
+        <details class="faq">
+          <summary>Do I have to rewrite my pipelines?</summary>
+          <p>No. Speedforge speaks the standard GitHub Actions runner protocol. The only change is the <code>runs-on</code> label; your steps, caches, and matrix builds carry over unchanged.</p>
+        </details>
+        <details class="faq">
+          <summary>Will Speedforge change my repos without asking?</summary>
+          <p>No. The migration arrives as ordinary pull requests. Nothing moves to Speedforge until you review and merge them.</p>
+        </details>
+        <details class="faq">
+          <summary>What permissions does the App need?</summary>
+          <p>Only the repositories you select. To open the migration PRs it needs write access to contents, workflows, and pull requests on those repos — and nothing on repositories you don't choose.</p>
+        </details>
+        <details class="faq">
+          <summary>How do I remove Speedforge?</summary>
+          <p>Uninstall the GitHub App and revert the <code>runs-on</code> lines (or merge the revert). Speedforge tears down your dedicated environment automatically when the App is removed.</p>
+        </details>
+        <details class="faq">
+          <summary>Can I mix Speedforge and GitHub-hosted runners?</summary>
+          <p>Yes. Move the workflows you want and leave the rest. Migration is per-workflow and fully reversible.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta">
+      <div class="wrap cta-inner">
+        <h2>Ready when you are.</h2>
+        <p>Install the Speedforge App and let it open your migration PRs.</p>
+        <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-inner">
+      <span class="brand">Speedforge</span>
+      <span class="muted">Dedicated, autoscaling CI runners for GitHub Actions.</span>
+      <a href="/">Home</a>
+    </div>
+  </footer>
+</body>
+</html>
