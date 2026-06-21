@@ -53,15 +53,15 @@
           <div class="terminal-body">
             <div class="metric-row">
               <span>node-build</span>
-              <strong>0.59x</strong>
+              <strong>0.64x</strong>
             </div>
             <div class="metric-row">
               <span>docker-layered-build</span>
-              <strong>0.28x</strong>
+              <strong>0.53x</strong>
             </div>
             <div class="metric-row">
               <span>python-package-test</span>
-              <strong>0.51x</strong>
+              <strong>0.69x</strong>
             </div>
             <pre><span class="prompt">$</span> runs-on: speedforge
 ephemeral runner ready
@@ -148,7 +148,7 @@ jobs:
           <h2>Current data: no broad speed win yet.</h2>
           <p class="heading-copy">
             Latest accepted run:
-            <a href="https://github.com/speedforge/infra/actions/runs/27897135097">27897135097</a>.
+            <a href="https://github.com/speedforge/infra/actions/runs/27897445343">27897445343</a>.
             The harness runs identical workloads on Speedforge and
             <code>ubuntu-latest</code>; only measured results count.
           </p>
@@ -158,19 +158,19 @@ jobs:
             <span>Scenario</span><span>Speedforge</span><span>GitHub-hosted</span><span>Verdict</span>
           </div>
           <div class="benchmark-row" role="row">
-            <span>docker-build</span><span>2.4s</span><span>1.3s</span><strong>not faster</strong>
+            <span>docker-build</span><span>2.7s</span><span>2.5s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>docker-layered-build</span><span>25.4s</span><span>7.1s</span><strong>not faster</strong>
+            <span>docker-layered-build</span><span>15.1s</span><span>8.0s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>node-build</span><span>3.3s</span><span>2.0s</span><strong>not faster</strong>
+            <span>node-build</span><span>3.2s</span><span>2.0s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>node-ts-project</span><span>3.7s</span><span>2.5s</span><strong>not faster</strong>
+            <span>node-ts-project</span><span>3.6s</span><span>2.6s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>python-package-test</span><span>1.3s</span><span>0.7s</span><strong>not faster</strong>
+            <span>python-package-test</span><span>1.1s</span><span>0.8s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
             <span>python-test</span><span>0.7s</span><span>0.5s</span><strong>not faster</strong>
