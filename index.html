@@ -42,7 +42,7 @@
             <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
             <a class="btn btn-ghost" href="#waitlist">Request early access</a>
           </div>
-          <p class="subnote">Current public benchmark: Speedforge is faster on 0 of 6 measured scenarios.</p>
+          <p class="subnote">Current public benchmark: Speedforge is faster on 3 of 6 measured scenarios.</p>
         </div>
 
         <div class="terminal-shot" aria-label="Speedforge benchmark summary">
@@ -53,15 +53,15 @@
           <div class="terminal-body">
             <div class="metric-row">
               <span>node-build</span>
-              <strong>0.64x</strong>
+              <strong>0.85x</strong>
             </div>
             <div class="metric-row">
               <span>docker-layered-build</span>
-              <strong>0.53x</strong>
+              <strong>0.51x</strong>
             </div>
             <div class="metric-row">
               <span>python-package-test</span>
-              <strong>0.69x</strong>
+              <strong>1.16x</strong>
             </div>
             <pre><span class="prompt">$</span> runs-on: speedforge
 ephemeral runner ready
@@ -147,8 +147,8 @@ jobs:
           <p class="eyebrow">Measured benchmark</p>
           <h2>Current data: no broad speed win yet.</h2>
           <p class="heading-copy">
-            Latest default-label run:
-            <a href="https://github.com/speedforge/infra/actions/runs/27897445343">27897445343</a>.
+            Latest corrected default-label run:
+            <a href="https://github.com/speedforge/infra/actions/runs/27898641818">27898641818</a>.
             The harness runs identical workloads on Speedforge and
             <code>ubuntu-latest</code>; only measured results count.
           </p>
@@ -158,22 +158,22 @@ jobs:
             <span>Scenario</span><span>Speedforge</span><span>GitHub-hosted</span><span>Verdict</span>
           </div>
           <div class="benchmark-row" role="row">
-            <span>docker-build</span><span>2.7s</span><span>2.5s</span><strong>not faster</strong>
+            <span>docker-build</span><span>0.8s</span><span>2.5s</span><strong>faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>docker-layered-build</span><span>15.1s</span><span>8.0s</span><strong>not faster</strong>
+            <span>docker-layered-build</span><span>14.8s</span><span>7.6s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>node-build</span><span>3.2s</span><span>2.0s</span><strong>not faster</strong>
+            <span>node-build</span><span>5.5s</span><span>4.7s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>node-ts-project</span><span>3.6s</span><span>2.6s</span><strong>not faster</strong>
+            <span>node-ts-project</span><span>5.8s</span><span>5.8s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>python-package-test</span><span>1.1s</span><span>0.8s</span><strong>not faster</strong>
+            <span>python-package-test</span><span>2.1s</span><span>2.4s</span><strong>faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>python-test</span><span>0.7s</span><span>0.5s</span><strong>not faster</strong>
+            <span>python-test</span><span>1.1s</span><span>1.9s</span><strong>faster</strong>
           </div>
         </div>
         <p class="bench-note">

@@ -27,7 +27,7 @@ jobs:
           grep -q "github.com/apps/speedforge/installations/new" index.html
           grep -q "runs-on: speedforge" index.html
           grep -q "Current data: no broad speed win yet" index.html
-          grep -q "27897445343" index.html
+          grep -q "27898641818" index.html
           grep -q "Request early access" index.html
       - name: Getting-started linked + onboarding flow present
         run: |
