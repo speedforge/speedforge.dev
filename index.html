@@ -42,7 +42,7 @@
             <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
             <a class="btn btn-ghost" href="#waitlist">Request early access</a>
           </div>
-          <p class="subnote">Current public benchmark: Speedforge is faster on 1 of 3 measured scenarios.</p>
+          <p class="subnote">Current public benchmark: Speedforge is faster on 2 of 3 measured scenarios.</p>
         </div>
 
         <div class="terminal-shot" aria-label="Speedforge benchmark summary">
@@ -53,15 +53,15 @@
           <div class="terminal-body">
             <div class="metric-row">
               <span>node-build</span>
-              <strong class="good">1.08x faster</strong>
+              <strong>0.76x</strong>
             </div>
             <div class="metric-row">
               <span>docker-build</span>
-              <strong>0.93x</strong>
+              <strong class="good">3.10x faster</strong>
             </div>
             <div class="metric-row">
               <span>python-test</span>
-              <strong>0.73x</strong>
+              <strong class="good">1.05x faster</strong>
             </div>
             <pre><span class="prompt">$</span> runs-on: speedforge
 ephemeral runner ready
@@ -145,10 +145,10 @@ jobs:
       <div class="wrap">
         <div class="section-heading">
           <p class="eyebrow">Measured benchmark</p>
-          <h2>Current data: one win, not a blanket speed claim.</h2>
+          <h2>Current data: two wins, not a blanket speed claim.</h2>
           <p class="heading-copy">
             Latest accepted run:
-            <a href="https://github.com/speedforge/infra/actions/runs/27895683262">27895683262</a>.
+            <a href="https://github.com/speedforge/infra/actions/runs/27896246759">27896246759</a>.
             The harness runs identical workloads on Speedforge and
             <code>ubuntu-latest</code>; only measured results count.
           </p>
@@ -158,13 +158,13 @@ jobs:
             <span>Scenario</span><span>Speedforge</span><span>GitHub-hosted</span><span>Verdict</span>
           </div>
           <div class="benchmark-row" role="row">
-            <span>node-build</span><span>4.2s</span><span>4.5s</span><strong class="good">1.08x faster</strong>
+            <span>node-build</span><span>5.0s</span><span>3.8s</span><strong>not faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>docker-build</span><span>3.4s</span><span>3.1s</span><strong>not faster</strong>
+            <span>docker-build</span><span>2.5s</span><span>7.9s</span><strong class="good">3.10x faster</strong>
           </div>
           <div class="benchmark-row" role="row">
-            <span>python-test</span><span>1.1s</span><span>0.8s</span><strong>not faster</strong>
+            <span>python-test</span><span>1.8s</span><span>1.9s</span><strong class="good">1.05x faster</strong>
           </div>
         </div>
         <p class="bench-note">
