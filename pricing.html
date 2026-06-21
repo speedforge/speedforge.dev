@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Pricing — Speedforge</title>
-  <meta name="description" content="Speedforge is usage-based: pay only for the runner-minutes you use, billed per minute and meaningfully cheaper than GitHub-hosted runners. Start free — 30 days, no credit card." />
-  <meta property="og:title" content="Speedforge pricing — pay per runner-minute, cheaper than GitHub-hosted" />
-  <meta property="og:description" content="Usage-based CI runners. Pay only for the minutes you run, billed per minute, below GitHub-hosted rates. Free trial, no credit card." />
+  <meta name="description" content="Speedforge is usage-based CI: 3,000 free runner-minutes every month (no credit card), then $0.004/min — half of GitHub-hosted's standard Linux rate. Drop-in for GitHub Actions." />
+  <meta property="og:title" content="Speedforge pricing — 3,000 free minutes/month, then $0.004/min" />
+  <meta property="og:description" content="Usage-based CI runners. 3,000 free runner-minutes/month, no card. Then $0.004/min — half GitHub-hosted's standard Linux rate. Drop-in runs-on." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://speedforge.dev/pricing.html" />
   <link rel="stylesheet" href="./style.css" />
@@ -62,7 +62,7 @@
           <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Start free</a>
           <a class="btn btn-ghost" href="#plans">See the rates</a>
         </div>
-        <p class="subnote">Free trial: 30 days, ~100 CI minutes, no credit card.</p>
+        <p class="subnote">3,000 free runner-minutes every month — no credit card.</p>
       </div>
     </section>
 
@@ -93,13 +93,13 @@
             </ul>
           </div>
           <div class="price-card">
-            <h3>Free trial</h3>
-            <div class="rate">Free <small>to start</small></div>
-            <p class="sub">30 days · ~100 CI minutes · no card</p>
+            <h3>Free tier</h3>
+            <div class="rate">3,000 <small>min / month free</small></div>
+            <p class="sub">Every month · no credit card</p>
             <ul>
-              <li>Move one workflow, see real numbers</li>
-              <li>No commitment, cancel anytime</li>
-              <li>Convert to usage-based when you're ready</li>
+              <li>Resets monthly — not a one-time trial</li>
+              <li>No card to start, no commitment</li>
+              <li>Only minutes beyond 3,000 are billed</li>
             </ul>
           </div>
         </div>
@@ -111,7 +111,8 @@
             <tr><th>Runner</th><th>GitHub-hosted (Linux 2-core)</th><th class="you">Speedforge standard</th></tr>
           </thead>
           <tbody>
-            <tr><td>Per runner-minute</td><td>$0.006 (published 2-core rate)</td><td class="you">$0.004 — ~33% less</td></tr>
+            <tr><td>Per runner-minute</td><td>$0.008 (published Linux 2-core rate)</td><td class="you">$0.004 — half the price</td></tr>
+            <tr><td>Free minutes / month</td><td>2,000–3,000 (plan-dependent)</td><td class="you">3,000 — no card</td></tr>
             <tr><td>Idle cost</td><td>n/a</td><td class="you">Zero — scales to zero</td></tr>
             <tr><td>Migration</td><td>—</td><td class="you">One line: <code>runs-on: speedforge</code></td></tr>
             <tr><td>Isolation</td><td>Shared hosted pool</td><td class="you">Dedicated, isolated namespace per org</td></tr>
@@ -119,8 +120,30 @@
         </table>
 
         <div class="note">
-          <p>Billed monthly through Stripe against your metered usage. You only pay for runner-minutes beyond your free trial — and you can watch your usage the whole time.</p>
+          <p>Billed monthly through Stripe against your metered usage. Your first 3,000 runner-minutes each month are free; you only pay for minutes beyond that — and you can watch your usage the whole time.</p>
         </div>
+
+        <h2 id="benchmarks">Performance — our own numbers</h2>
+        <p>We don't copy anyone's benchmark. The table below is median wall-clock
+        from a benchmark that runs the same representative jobs on Speedforge and
+        on GitHub-hosted <code>ubuntu-latest</code> — and it's open, so you can
+        reproduce it. Speedforge is dramatically faster on container and Python
+        workloads; Node and layered-Docker builds are slower today while we roll
+        out in-cluster cache locality. We publish the wins and the work-in-progress.</p>
+        <table class="compare">
+          <thead>
+            <tr><th>Representative job</th><th>GitHub-hosted</th><th class="you">Speedforge</th><th>Result</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Docker image build</td><td>6.8s</td><td class="you">1.6s</td><td class="you">4.2× faster</td></tr>
+            <tr><td>Python test suite</td><td>2.3s</td><td class="you">0.9s</td><td class="you">2.5× faster</td></tr>
+            <tr><td>Python package install + test</td><td>2.2s</td><td class="you">2.1s</td><td class="you">~1.1× faster</td></tr>
+            <tr><td>Node build</td><td>5.2s</td><td>6.5s</td><td>slower — cache locality WIP</td></tr>
+            <tr><td>Node TS project</td><td>5.3s</td><td>7.1s</td><td>slower — cache locality WIP</td></tr>
+            <tr><td>Docker layered build</td><td>7.2s</td><td>12.3s</td><td>slower — cache locality WIP</td></tr>
+          </tbody>
+        </table>
+        <p class="subnote">Medians across repeated runs on the standard runner. Small jobs are dominated by fixed overhead; your mileage depends on your workload — which is exactly why we'd rather you run your own pipeline on the free tier than trust a number.</p>
 
         <h2>Pricing FAQ</h2>
         <details class="faq">
@@ -128,12 +151,12 @@
           <p>Per runner-minute, metered as your jobs run, invoiced monthly through Stripe. No reserved capacity, no minimums beyond what you use.</p>
         </details>
         <details class="faq">
-          <summary>What does the free trial include?</summary>
-          <p>New organizations get 30 days and roughly 100 CI minutes, with no credit card required. Point one workflow at <code>speedforge</code> and decide from your own numbers.</p>
+          <summary>What's in the free tier?</summary>
+          <p>Every organization gets 3,000 runner-minutes free each month — no credit card. The allowance resets monthly; it's not a one-time trial. Point a workflow at <code>speedforge</code> and decide from your own numbers.</p>
         </details>
         <details class="faq">
-          <summary>What happens when the trial ends?</summary>
-          <p>You convert to usage-based pricing — add a payment method and keep running. Nothing changes in your workflows; only the meter starts counting paid minutes.</p>
+          <summary>What happens past 3,000 minutes?</summary>
+          <p>Minutes beyond your monthly free allowance are billed per runner-minute ($0.004 standard / $0.008 large) through Stripe. Add a payment method to keep running past the free tier; nothing changes in your workflows, only the meter starts counting paid minutes.</p>
         </details>
         <details class="faq">
           <summary>Are public repositories free?</summary>
