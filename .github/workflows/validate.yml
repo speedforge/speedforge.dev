@@ -17,6 +17,7 @@ jobs:
           test -f style.css
           test -f CNAME
           test -f getting-started.html
+          test -f privacy/generic-denylist.yml
       - name: Custom domain pinned
         run: grep -qx "speedforge.dev" CNAME
       - name: Landing content sanity
@@ -69,15 +70,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Skip private denylist scan for untrusted fork PRs
+      - name: Scan committed generic denylist
+        run: |
+          set -euo pipefail
+          python3 scripts/privacy_scan.py \
+            --denylist privacy/generic-denylist.yml \
+            index.html pricing.html getting-started.html status.html style.css CNAME
+
+      - name: Private denylist unavailable for untrusted fork PRs
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
         run: |
-          echo "::notice::Private denylist scan skipped for fork PR; it runs on trusted branches and after merge."
+          echo "::notice::Committed generic privacy scan ran; private denylist scan is unavailable for fork PRs."
 
-      - name: Skip private denylist scan when token is not configured
+      - name: Private denylist token not configured
         if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN != 'true'
         run: |
-          echo "::notice::PRIVATE_DENYLIST_TOKEN is not configured; private denylist scan skipped until the repository secret is provisioned."
+          echo "::notice::Committed generic privacy scan ran; private denylist scan skipped until PRIVATE_DENYLIST_TOKEN is provisioned."
 
       - name: Fetch pinned private denylist
         if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
@@ -92,7 +100,7 @@ jobs:
             -o /tmp/privacy-denylist.yml
           test -s /tmp/privacy-denylist.yml
 
-      - name: Scan published content
+      - name: Scan pinned private denylist
         if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
         run: |
           set -euo pipefail
