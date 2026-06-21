@@ -26,8 +26,8 @@ jobs:
           grep -q 'href="./style.css"' index.html
           grep -q "github.com/apps/speedforge/installations/new" index.html
           grep -q "runs-on: speedforge" index.html
-          grep -q "Current data: two wins, not a blanket speed claim" index.html
-          grep -q "27896246759" index.html
+          grep -q "Current data: one win, not a blanket speed claim" index.html
+          grep -q "27896426919" index.html
           grep -q "Request early access" index.html
       - name: Getting-started linked + onboarding flow present
         run: |
