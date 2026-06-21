@@ -57,3 +57,40 @@ jobs:
           if grep -RniE "shared[- ]subscription|flat[- ]cap|tokenomics|shared[- ](quota|cap)|per[- ]seat|seat[- ]based|cost[- ]basis|node[- ]hour" -- *.html; then
             echo "Internal/shared-subscription cost model must not appear in public copy (#574)"; exit 1
           fi
+
+  privacy-denylist:
+    name: Privacy denylist
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip private denylist scan for untrusted fork PRs
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "::notice::Private denylist scan skipped for fork PR; it runs on trusted branches and after merge."
+
+      - name: Fetch pinned private denylist
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        env:
+          PRIVATE_DENYLIST_TOKEN: ${{ secrets.PRIVATE_DENYLIST_TOKEN }}
+        run: |
+          set -euo pipefail
+          if [ -z "${PRIVATE_DENYLIST_TOKEN:-}" ]; then
+            echo "PRIVATE_DENYLIST_TOKEN is required for trusted privacy scan"; exit 1
+          fi
+          curl -fsSL \
+            -H "Authorization: Bearer ${PRIVATE_DENYLIST_TOKEN}" \
+            -H "Accept: application/vnd.github.raw" \
+            "https://api.github.com/repos/selamy-labs/internal-agent-skills/contents/privacy/denylist.yml?ref=denylist-v1" \
+            -o /tmp/privacy-denylist.yml
+          test -s /tmp/privacy-denylist.yml
+
+      - name: Scan published content
+        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        run: |
+          set -euo pipefail
+          python3 scripts/privacy_scan.py \
+            --denylist /tmp/privacy-denylist.yml \
+            index.html pricing.html getting-started.html status.html style.css CNAME
