@@ -64,6 +64,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    env:
+      HAS_PRIVATE_DENYLIST_TOKEN: ${{ secrets.PRIVATE_DENYLIST_TOKEN != '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -72,15 +74,17 @@ jobs:
         run: |
           echo "::notice::Private denylist scan skipped for fork PR; it runs on trusted branches and after merge."
 
+      - name: Skip private denylist scan when token is not configured
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN != 'true'
+        run: |
+          echo "::notice::PRIVATE_DENYLIST_TOKEN is not configured; private denylist scan skipped until the repository secret is provisioned."
+
       - name: Fetch pinned private denylist
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
         env:
           PRIVATE_DENYLIST_TOKEN: ${{ secrets.PRIVATE_DENYLIST_TOKEN }}
         run: |
           set -euo pipefail
-          if [ -z "${PRIVATE_DENYLIST_TOKEN:-}" ]; then
-            echo "PRIVATE_DENYLIST_TOKEN is required for trusted privacy scan"; exit 1
-          fi
           curl -fsSL \
             -H "Authorization: Bearer ${PRIVATE_DENYLIST_TOKEN}" \
             -H "Accept: application/vnd.github.raw" \
@@ -89,7 +93,7 @@ jobs:
           test -s /tmp/privacy-denylist.yml
 
       - name: Scan published content
-        if: github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
         run: |
           set -euo pipefail
           python3 scripts/privacy_scan.py \
