@@ -17,6 +17,7 @@ jobs:
           test -f style.css
           test -f CNAME
           test -f getting-started.html
+          test -f privacy/generic-denylist.yml
       - name: Custom domain pinned
         run: grep -qx "speedforge.dev" CNAME
       - name: Landing content sanity
@@ -26,6 +27,10 @@ jobs:
           grep -q 'href="./style.css"' index.html
           grep -q "github.com/apps/speedforge/installations/new" index.html
           grep -q "runs-on: speedforge" index.html
+          grep -q "Current data: no broad speed win yet" index.html
+          grep -q "27901390342" index.html
+          grep -q "Speedforge is faster on 2 of 6 measured scenarios" index.html
+          grep -q "Request early access" index.html
       - name: Getting-started linked + onboarding flow present
         run: |
           set -euo pipefail
@@ -54,3 +59,51 @@ jobs:
           if grep -RniE "shared[- ]subscription|flat[- ]cap|tokenomics|shared[- ](quota|cap)|per[- ]seat|seat[- ]based|cost[- ]basis|node[- ]hour" -- *.html; then
             echo "Internal/shared-subscription cost model must not appear in public copy (#574)"; exit 1
           fi
+
+  privacy-denylist:
+    name: Privacy denylist
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      HAS_PRIVATE_DENYLIST_TOKEN: ${{ secrets.PRIVATE_DENYLIST_TOKEN != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan committed generic denylist
+        run: |
+          set -euo pipefail
+          python3 scripts/privacy_scan.py \
+            --denylist privacy/generic-denylist.yml \
+            index.html pricing.html getting-started.html status.html style.css CNAME
+
+      - name: Private denylist unavailable for untrusted fork PRs
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository
+        run: |
+          echo "::notice::Committed generic privacy scan ran; private denylist scan is unavailable for fork PRs."
+
+      - name: Private denylist token not configured
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN != 'true'
+        run: |
+          echo "::notice::Committed generic privacy scan ran; private denylist scan skipped until PRIVATE_DENYLIST_TOKEN is provisioned."
+
+      - name: Fetch pinned private denylist
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
+        env:
+          PRIVATE_DENYLIST_TOKEN: ${{ secrets.PRIVATE_DENYLIST_TOKEN }}
+        run: |
+          set -euo pipefail
+          curl -fsSL \
+            -H "Authorization: Bearer ${PRIVATE_DENYLIST_TOKEN}" \
+            -H "Accept: application/vnd.github.raw" \
+            "https://api.github.com/repos/selamy-labs/internal-agent-skills/contents/privacy/denylist.yml?ref=denylist-v1" \
+            -o /tmp/privacy-denylist.yml
+          test -s /tmp/privacy-denylist.yml
+
+      - name: Scan pinned private denylist
+        if: (github.event_name != 'pull_request' || github.event.pull_request.head.repo.full_name == github.repository) && env.HAS_PRIVATE_DENYLIST_TOKEN == 'true'
+        run: |
+          set -euo pipefail
+          python3 scripts/privacy_scan.py \
+            --denylist /tmp/privacy-denylist.yml \
+            index.html pricing.html getting-started.html status.html style.css CNAME

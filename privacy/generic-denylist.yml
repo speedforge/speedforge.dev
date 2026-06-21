@@ -1,0 +1,34 @@
+# Public fallback privacy denylist.
+#
+# This file intentionally contains generic leak classes only. Trusted CI can
+# enhance it with the private denylist when PRIVATE_DENYLIST_TOKEN is present.
+org_product:
+  - tokenomics
+  - private denylist
+  - internal-agent-skills
+business_person: []
+internal_process:
+  - shared subscription
+  - shared-subscription
+  - flat cap
+  - flat-cap
+  - cost basis
+  - node hour
+counterpart_leak:
+  - Patrick
+  - Bryan
+silence_phrase:
+  - do not publicize
+  - internal only
+source_origin:
+  - laneq
+  - tmux-session-state
+secret_patterns:
+  - label: GitHub token
+    pattern: 'gh[pousr]_[A-Za-z0-9_]{20,}'
+  - label: Slack token
+    pattern: 'xox[baprs]-[A-Za-z0-9-]{10,}'
+  - label: Private key block
+    pattern: '-----BEGIN [A-Z ]*PRIVATE KEY-----'
+  - label: AWS access key
+    pattern: 'AKIA[0-9A-Z]{16}'

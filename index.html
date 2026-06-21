@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Speedforge — reliable, drop-in CI runners for GitHub Actions</title>
-  <meta name="description" content="Speedforge runs your GitHub Actions on dedicated, autoscaling, isolated runners. Install the app and it opens the runs-on migration PRs for you — drop-in, faster, and cheaper." />
-  <meta property="og:title" content="Speedforge — reliable, drop-in CI runners for GitHub Actions" />
-  <meta property="og:description" content="Dedicated, autoscaling, isolated CI runners for GitHub Actions. Install the app, let it open your migration PRs, keep every pipeline." />
+  <title>Speedforge - measured, drop-in CI runners for GitHub Actions</title>
+  <meta name="description" content="Speedforge runs GitHub Actions on dedicated, autoscaling, isolated runners. Install the app, review the runs-on migration PRs, and compare measured performance before rollout." />
+  <meta property="og:title" content="Speedforge - measured, drop-in CI runners for GitHub Actions" />
+  <meta property="og:description" content="Dedicated, autoscaling CI runners for GitHub Actions with transparent benchmark results and early-access onboarding." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://speedforge.dev" />
   <link rel="stylesheet" href="./style.css" />
@@ -17,66 +17,93 @@
       <a class="brand" href="/">Speedforge</a>
       <nav class="nav-links">
         <a href="#how">How it works</a>
-        <a href="#why">Why Speedforge</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#benchmarks">Benchmarks</a>
         <a href="/pricing.html">Pricing</a>
         <a href="/getting-started.html">Getting started</a>
-        <a href="/status.html">Status</a>
         <a class="btn btn-ghost" href="https://github.com/apps/speedforge/installations/new">Install the app</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="wrap">
-        <p class="eyebrow">Self-hosted CI runners, fully managed</p>
-        <h1>Reliable CI runners.<br />Drop-in, and cheaper.</h1>
-        <p class="lede">
-          Speedforge runs your existing GitHub Actions workflows on dedicated,
-          autoscaling runners — each job isolated and ephemeral. Install the app
-          and it opens the <code>runs-on</code> migration PRs for you. Keep every
-          pipeline you already have, faster and for less.
-        </p>
-        <div class="cta-row">
-          <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
-          <a class="btn btn-ghost" href="#how">See how it works</a>
+    <section class="hero hero-split">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <p class="eyebrow">Early access for GitHub Actions teams</p>
+          <h1>Speedforge</h1>
+          <p class="lede">
+            Dedicated, autoscaling CI runners that drop into your existing
+            GitHub Actions workflows. Install the app, review the
+            <code>runs-on: speedforge</code> migration PRs, and roll out from
+            measured evidence instead of marketing claims.
+          </p>
+          <div class="cta-row cta-left">
+            <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
+            <a class="btn btn-ghost" href="#waitlist">Request early access</a>
+          </div>
+          <p class="subnote">Current public benchmark: Speedforge is faster on 2 of 6 measured scenarios.</p>
         </div>
-        <p class="subnote">Works with your existing <code>.github/workflows</code>. No pipeline rewrites.</p>
+
+        <div class="terminal-shot" aria-label="Speedforge benchmark summary">
+          <div class="terminal-bar">
+            <span></span><span></span><span></span>
+            <strong>benchmark-vs-github.yml</strong>
+          </div>
+          <div class="terminal-body">
+            <div class="metric-row">
+              <span>docker-build</span>
+              <strong>2.77x</strong>
+            </div>
+            <div class="metric-row">
+              <span>docker-layered-build</span>
+              <strong>0.58x</strong>
+            </div>
+            <div class="metric-row">
+              <span>python-test</span>
+              <strong>1.91x</strong>
+            </div>
+            <pre><span class="prompt">$</span> runs-on: speedforge
+ephemeral runner ready
+job isolated per repository
+scoreboard artifact uploaded</pre>
+          </div>
+        </div>
       </div>
     </section>
 
     <section class="strip">
       <div class="wrap strip-inner">
-        <span>Drop-in for GitHub Actions</span>
-        <span>Autoscaling — scales to zero</span>
-        <span>Ephemeral, isolated runners</span>
-        <span>Bring your own org</span>
+        <span>Drop-in GitHub Actions runner label</span>
+        <span>Dedicated org isolation</span>
+        <span>Ephemeral runners per job</span>
+        <span>Transparent benchmark scoreboard</span>
       </div>
     </section>
 
     <section id="how" class="section">
       <div class="wrap">
-        <h2>Three steps to faster CI</h2>
+        <div class="section-heading">
+          <p class="eyebrow">How it works</p>
+          <h2>From install to first run without rewriting CI.</h2>
+        </div>
         <div class="steps">
           <div class="step">
             <div class="num">1</div>
             <h3>Install the app</h3>
-            <p>Add the Speedforge GitHub App to your organization. It only needs the repositories you choose.</p>
+            <p>Add the Speedforge GitHub App to the repositories you choose. Speedforge derives org and installation context from GitHub.</p>
           </div>
           <div class="step">
             <div class="num">2</div>
-            <h3>Speedforge opens the PRs</h3>
-            <p>Speedforge scans your installed repos and opens pull requests that switch <code>runs-on</code> to <code>speedforge</code>. Review and merge when you're ready — or change the line yourself.</p>
+            <h3>Review the migration PRs</h3>
+            <p>Speedforge opens pull requests that switch eligible jobs to <code>runs-on: speedforge</code>. You review, test, and merge.</p>
           </div>
           <div class="step">
             <div class="num">3</div>
-            <h3>Ship</h3>
-            <p>Your jobs run on dedicated Speedforge runners — the same logs, the same Actions UI, the same results.</p>
+            <h3>Run on isolated capacity</h3>
+            <p>Each job gets a fresh runner in your org's dedicated pool, with the same Actions logs and workflow controls you already use.</p>
           </div>
         </div>
-        <p style="text-align:center;color:var(--muted);margin:0 0 28px">
-          See the full walkthrough in the <a href="/getting-started.html" style="color:var(--accent)">getting-started guide</a>.
-        </p>
         <pre class="code"><span class="c"># .github/workflows/ci.yml</span>
 jobs:
   build:
@@ -87,42 +114,111 @@ jobs:
       </div>
     </section>
 
-    <section id="why" class="section section-alt">
+    <section id="architecture" class="section section-alt">
       <div class="wrap">
-        <h2>Why teams move to Speedforge</h2>
-        <div class="cards">
-          <div class="card">
-            <h3>Lower CI spend</h3>
-            <p>Dedicated runners on efficient, autoscaling infrastructure — meaningfully cheaper than stock GitHub-hosted minutes.</p>
+        <div class="section-heading">
+          <p class="eyebrow">Architecture</p>
+          <h2>Standard GitHub Actions protocol, managed runner substrate.</h2>
+        </div>
+        <div class="architecture">
+          <div>
+            <h3>Control plane</h3>
+            <p>GitHub App events drive onboarding. GitOps reconciles runner scale sets, network policy, and cache substrate from version-controlled source.</p>
           </div>
-          <div class="card">
-            <h3>Just as fast</h3>
-            <p>Right-sized compute and warm capacity keep build and queue times on par with — or better than — what you have today.</p>
+          <div>
+            <h3>Runner plane</h3>
+            <p>Actions Runner Controller starts ephemeral runners on demand. Jobs see normal GitHub Actions behavior while the underlying fleet scales to zero.</p>
           </div>
-          <div class="card">
-            <h3>Truly drop-in</h3>
-            <p>Standard GitHub Actions runner protocol. Keep your workflows, caches, and matrix builds. Change one line.</p>
+          <div>
+            <h3>Cache plane</h3>
+            <p>Node-local pnpm, uv, Buildx, and Docker Hub pull-through caches improve warm-path runs without changing workflow syntax.</p>
           </div>
-          <div class="card">
-            <h3>Scales to zero</h3>
-            <p>Runners spin up on demand and scale back to nothing when idle. No idle fleet to pay for or babysit.</p>
-          </div>
-          <div class="card">
-            <h3>Isolated &amp; ephemeral</h3>
-            <p>Each job gets a fresh, isolated runner that's torn down afterward — clean state, every run.</p>
-          </div>
-          <div class="card">
-            <h3>Your org, your control</h3>
-            <p>Scoped to the repositories you pick. Install in minutes, remove just as fast.</p>
+          <div>
+            <h3>Safety plane</h3>
+            <p>Repository-scoped installs, isolated namespaces, private runner pools, and public-repo guardrails keep tenant boundaries explicit.</p>
           </div>
         </div>
       </div>
     </section>
 
+    <section id="benchmarks" class="section">
+      <div class="wrap">
+        <div class="section-heading">
+          <p class="eyebrow">Measured benchmark</p>
+          <h2>Current data: no broad speed win yet.</h2>
+          <p class="heading-copy">
+            Latest deployed default-label run:
+            <a href="https://github.com/speedforge/infra/actions/runs/27901390342">27901390342</a>.
+            The harness runs identical workloads on Speedforge and
+            <code>ubuntu-latest</code>; only measured results count.
+          </p>
+        </div>
+        <div class="benchmark-table" role="table" aria-label="Speedforge benchmark results">
+          <div class="benchmark-row benchmark-head" role="row">
+            <span>Scenario</span><span>Speedforge</span><span>GitHub-hosted</span><span>Verdict</span>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>docker-build</span><span>1.9s</span><span>5.1s</span><strong>faster</strong>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>docker-layered-build</span><span>14.2s</span><span>8.3s</span><strong>not faster</strong>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>node-build</span><span>5.9s</span><span>4.8s</span><strong>not faster</strong>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>node-ts-project</span><span>6.9s</span><span>6.4s</span><strong>not faster</strong>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>python-package-test</span><span>2.1s</span><span>2.1s</span><strong>not faster</strong>
+          </div>
+          <div class="benchmark-row" role="row">
+            <span>python-test</span><span>1.2s</span><span>2.2s</span><strong>faster</strong>
+          </div>
+        </div>
+        <p class="bench-note">
+          Speedforge is priced below GitHub-hosted Linux 2-core minutes, but the
+          speed story is still workload-specific. Teams should trial it on their
+          own CI before making broad performance claims.
+        </p>
+      </div>
+    </section>
+
+    <section id="waitlist" class="section section-alt">
+      <div class="wrap waitlist-grid">
+        <div>
+          <p class="eyebrow">Early access</p>
+          <h2>Bring one workflow and compare it honestly.</h2>
+          <p class="heading-copy">
+            Speedforge is open for early teams that want managed self-hosted
+            runners without owning the substrate. Start with a single workflow,
+            look at wall-clock time, reliability, and cost, then expand only if
+            the numbers work.
+          </p>
+        </div>
+        <form class="waitlist-form" action="mailto:engineering@speedforge.dev" method="post" enctype="text/plain">
+          <label>
+            Work email
+            <input name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            GitHub organization
+            <input name="github_org" type="text" autocomplete="organization" required />
+          </label>
+          <label>
+            What should we benchmark first?
+            <textarea name="workflow" rows="4" placeholder="Node monorepo, Docker image build, Python tests, large matrix..."></textarea>
+          </label>
+          <button class="btn btn-primary" type="submit">Request early access</button>
+          <p class="form-note">This opens an email draft to Speedforge engineering. No tracking script required.</p>
+        </form>
+      </div>
+    </section>
+
     <section class="cta">
       <div class="wrap cta-inner">
-        <h2>Move your first workflow this week.</h2>
-        <p>Install the Speedforge App, let it open your migration PRs, and watch your next run.</p>
+        <h2>Move one workflow, then decide from the run.</h2>
+        <p>Install the Speedforge App, review the migration PR, and keep the rollout reversible.</p>
         <div class="cta-row">
           <a class="btn btn-primary" href="https://github.com/apps/speedforge/installations/new">Install the Speedforge App</a>
           <a class="btn btn-ghost" href="/getting-started.html">Read the getting-started guide</a>
@@ -134,10 +230,10 @@ jobs:
   <footer class="footer">
     <div class="wrap footer-inner">
       <span class="brand">Speedforge</span>
-      <span class="muted">Faster, cheaper CI for GitHub Actions.</span>
+      <span class="muted">Measured, managed CI runners for GitHub Actions.</span>
       <a href="/pricing.html">Pricing</a>
       <a href="/getting-started.html">Getting started</a>
-      <a href="https://github.com/apps/speedforge/installations/new">Install the app</a>
+      <a href="/status.html">Status</a>
     </div>
   </footer>
 </body>
